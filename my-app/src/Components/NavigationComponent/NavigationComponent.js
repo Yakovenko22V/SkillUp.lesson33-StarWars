@@ -9,7 +9,7 @@ import ItemPlanet from '../PlanetsComponent/ItemPlanet/ItemPlanet';
 import PeopleComponent from "../PeopleComponent/PeopleComponent";
 import PlanetsComponent from '../PlanetsComponent/PlanetsComponent'
 import StarshipsComponent from "../StarshipsComponent/StarshipsComponent";
-import {pathes} from '/SkillUp/SkillUp.lesson33-StarWars/my-app/src/pathes/pathes'
+import {pathes} from '../../pathes/pathes';
 import ItemStarship from '../StarshipsComponent/ItemStarship/ItemStarship';
 
 function NavigationComponent() {
