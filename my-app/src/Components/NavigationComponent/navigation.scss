@@ -1,0 +1,21 @@
+.nav-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #b88484;
+    a {
+        font-size: 6vh;
+        color: beige;
+        text-decoration: none;
+    }
+}
+.rout-btn-link.active {
+    font-style: italic;
+    font-weight: bold;
+    color: darkred;
+    text-decoration: underline;
+}
+
+.item-list {
+
+}

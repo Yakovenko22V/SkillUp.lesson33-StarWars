@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { Outlet } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import './film.scss';
 
 function FilmComponent() {
     const [films, setFilms] = useState(null)
+
 
     useEffect(() => {
         fetch('https://swapi.dev/api/films/')
             .then(res => res.json())
             .then(
-                ({results}) => {
+                ({ results }) => {
                     setFilms(results);
-                    console.log('films', results)
                 })
     }, []);
 
-    if(!films) return <div>loading...</div>
+    if (!films) return <div>loading...</div>
     return (
-        <div>
-            Films:
-            {
-                films.map((item) => 
-                <p key={item.title}>{item.title}: Epizode: {item.episode_id}</p>)
-            }
+        <div className='wrapper'>
+            <div className='film'></div>
+            <div className='item-list'>
+                Films:
+                {
+                    films.map((item) => {
+                        const idUrl = item.url.split('/')[5]
+                        return <NavLink className='rout-btn-link' to={`/starwars-films/${idUrl}`} key={item.title}>{item.title}: Epizode {item.episode_id}</NavLink>
+                    }
+                    )
+                }
+            </div>
+            <Outlet />
         </div>
     )
 }

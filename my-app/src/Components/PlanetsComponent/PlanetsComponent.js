@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router';
+import './planets.scss';
 
 function PlanetsComponent() {
     const [planets, setPlanets] = useState(null)
@@ -9,18 +12,23 @@ function PlanetsComponent() {
             .then(
                 ({ results }) => {
                     setPlanets(results);
-                    console.log('planets', results)
                 })
     }, []);
 
     if (!planets) return <div>loading...</div>
     return (
-        <div>
-            Planets:
-            {
-                planets.map((item) =>
-                    <p key={item.name}>{item.name}</p>)
-            }
+        <div className='wrapper'>
+            <div className='planets'></div>
+            <div className='item-list'>
+                Planets:
+                {
+                    planets.map((item) =>{
+                        const idUrl = item.url.split('/')[5]
+                        return <NavLink to={`/planets/${idUrl}`} key={item.name}>{item.name}</NavLink>
+                    })
+                }
+            </div>
+            <Outlet />
         </div>
     )
 }

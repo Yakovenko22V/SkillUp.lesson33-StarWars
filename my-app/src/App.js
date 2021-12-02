@@ -1,11 +1,15 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import { BrowserRouter} from 'react-router-dom';
+import '../src/app.scss';
+import NavigationComponent from "./Components/NavigationComponent/NavigationComponent";
 
 function App() {
 
   return (
-    <div className="App">
-      <h1>Basic information on the Star Wars universe</h1>
+    <div>
+      <BrowserRouter>
+          {<NavigationComponent/>}
+      </BrowserRouter>
     </div>
   );
 }

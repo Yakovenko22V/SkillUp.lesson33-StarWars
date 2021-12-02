@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router';
+import './people.scss'
 
 function PeopleComponent() {
     const [people, setPeople] = useState(null)
@@ -9,18 +12,24 @@ function PeopleComponent() {
             .then(
                 ({ results }) => {
                     setPeople(results);
-                    console.log('people', results)
                 })
     }, []);
 
     if (!people) return <div>loading...</div>
     return (
-        <div>
-            Characters:
-            {
-                people.map((item) =>
-                    <p key={item.name}>{item.name}</p>)
-            }
+        <div className='wrapper'>
+            <div className='people'></div>
+            <div className='item-list'>
+                Characters:
+                {
+                    people.map((item) => {
+                        const idUrl = item.url.split('/')[5]
+                        return <NavLink className='rout-btn-link' to={`/characters/${idUrl}`} key={item.name}>{item.name}</NavLink>
+                })
+                }
+            </div>
+
+            <Outlet />
         </div>
     )
 }
