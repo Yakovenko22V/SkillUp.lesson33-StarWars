@@ -5,17 +5,24 @@ import './film.scss';
 
 function FilmComponent() {
     const [films, setFilms] = useState(null)
-
+    let isSubscribed = true;
 
     useEffect(() => {
         fetch('https://swapi.dev/api/films/')
             .then(res => res.json())
             .then(
                 ({ results }) => {
-                    setFilms(results);
+                    if (isSubscribed) {
+                        setFilms(results);
+                    }
                 })
-    }, []);
 
+        return () => {
+            // eslint-disable-next-line
+            isSubscribed = false;
+        }
+    }, []);
+    
     if (!films) return <div>loading...</div>
     return (
         <div className='wrapper'>

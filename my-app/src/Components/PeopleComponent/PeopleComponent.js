@@ -5,14 +5,21 @@ import './people.scss'
 
 function PeopleComponent() {
     const [people, setPeople] = useState(null)
+    let isSubscribed = true;
 
     useEffect(() => {
         fetch('https://swapi.dev/api/people/')
             .then(res => res.json())
             .then(
                 ({ results }) => {
-                    setPeople(results);
+                    if (isSubscribed) {
+                        setPeople(results);
+                    }
                 })
+        return () => {
+            // eslint-disable-next-line
+            isSubscribed = false;
+        }
     }, []);
 
     if (!people) return <div>loading...</div>

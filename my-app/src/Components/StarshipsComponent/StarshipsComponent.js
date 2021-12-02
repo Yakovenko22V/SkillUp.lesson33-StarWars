@@ -5,14 +5,21 @@ import './starships.scss';
 
 function StarshipsComponent() {
     const [starships, setStarships] = useState(null)
+    let isSubscribed = true;
 
     useEffect(() => {
         fetch('https://swapi.dev/api/starships/')
             .then(res => res.json())
             .then(
                 ({ results }) => {
-                    setStarships(results);
-                })
+                    if (isSubscribed) {
+                        setStarships(results);
+                    };
+                });
+        return () => {
+            // eslint-disable-next-line
+            isSubscribed = false;
+        }
     }, []);
 
     if (!starships) return <div>loading...</div>
@@ -22,10 +29,10 @@ function StarshipsComponent() {
             <div className='item-list'>
                 Starships:
                 {
-                    starships.map((item) =>{
+                    starships.map((item) => {
                         const idUrl = item.url.split('/')[5]
                         return <NavLink to={`/starships/${idUrl}`} key={item.name}>{item.name}</NavLink>
-                })
+                    })
                 }
             </div>
             <Outlet />

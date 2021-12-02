@@ -5,14 +5,21 @@ import './planets.scss';
 
 function PlanetsComponent() {
     const [planets, setPlanets] = useState(null)
+    let isSubscribed = true;
 
     useEffect(() => {
         fetch('https://swapi.dev/api/planets/')
             .then(res => res.json())
             .then(
                 ({ results }) => {
-                    setPlanets(results);
+                    if (isSubscribed) {
+                        setPlanets(results);
+                    }
                 })
+        return () => {
+            // eslint-disable-next-line
+            isSubscribed = false;
+        }
     }, []);
 
     if (!planets) return <div>loading...</div>
@@ -22,7 +29,7 @@ function PlanetsComponent() {
             <div className='item-list'>
                 Planets:
                 {
-                    planets.map((item) =>{
+                    planets.map((item) => {
                         const idUrl = item.url.split('/')[5]
                         return <NavLink to={`/planets/${idUrl}`} key={item.name}>{item.name}</NavLink>
                     })
